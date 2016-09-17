@@ -1,12 +1,10 @@
 'use strict';
 
-import Path from 'path';
-
-const mongoose = require(Path.join(__dirname, '../db/', 'mongoose.conf.'));
-
+const Path = require('path');
+const mongoose = require(Path.join(__dirname, '../db/', 'mongoose.conf'));
 const ProductsSchema = require(Path.join(__dirname, '../db/schemas/', 'product'));
 
-export class MainAPI {
+module.exports = class MainApi {
 
   getProduct(product) {
     return new Promise(
