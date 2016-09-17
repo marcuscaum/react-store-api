@@ -1,21 +1,40 @@
 'use strict';
 
-import Restify from 'restify';
-import MainAPI from '../modules/main.api.class';
-
+const Restify = require('restify');
+const Path = require('path');
 const server = Restify.createServer();
 const port = 3010;
 
-server.get('/products/:product', (req, res) => {
-  MainAPI.getProduct(req.params.product)
-    .then((json) => {
-      res.send(200, json);
-    })
-    .catch((err) => {
-      res.send(err);
-    });
-});
+const API = require(Path.join(__dirname, '', 'index')).MainAPI;
 
-server.listen(port, () => {
+server.use(Restify.acceptParser(server.acceptable));
+server.use(Restify.queryParser());
+server.use(Restify.bodyParser());
+
+server.get('/products/:product',
+ (req, res) => {
+    API.getProduct(req.params.product)
+      .then((json) => {
+        res.send(200, json);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  }
+);
+
+server.get('/products/all/',
+  (req, res) => {
+    API.getAllProducts(req.params.option)
+      .then((json) => {
+        res.send(200, json);
+      })
+      .catch((err) => {
+        res.send(err);
+      });
+  }
+);
+
+server.listen(port, function() {
   console.log("Server started @ 3000");
 });
