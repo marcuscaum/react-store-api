@@ -3,7 +3,7 @@
 const Restify = require('restify');
 const Path = require('path');
 const server = Restify.createServer();
-const port = 3010;
+const port = process.env.PORT || 3010;
 
 const API = require(Path.join(__dirname, '', 'index')).MainAPI;
 

@@ -2,4 +2,6 @@
 
 const Mongoose = require('mongoose');
 
-Mongoose.connect('mongodb://127.0.0.1/reactstore');
+const MONGODB_URI = proccess.env.MONGODLAB_URI || 'mongodb://127.0.0.1/reactstore';
+
+Mongoose.connect(MONGODB_URI);
