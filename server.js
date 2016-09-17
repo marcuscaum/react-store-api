@@ -4,7 +4,7 @@ const Restify = require('restify');
 const Path = require('path');
 const server = Restify.createServer();
 const port = process.env.PORT || 3010;
-const mongoose = require(Path.join(__dirname, '../db/', 'mongoose.conf'));
+const mongoose = require(Path.join(__dirname, 'db', 'mongoose.conf'));
 
 const API = require(Path.join(__dirname, '', 'index')).MainAPI;
 
