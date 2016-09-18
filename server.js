@@ -12,7 +12,7 @@ server.use(Restify.queryParser());
 server.use(Restify.bodyParser());
 
 server.use(
-  crossOrigin(req, res, next) {
+  function crossOrigin(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "X-Requested-With");
     return next();
