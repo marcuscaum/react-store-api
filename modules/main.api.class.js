@@ -2,7 +2,7 @@
 
 const Path = require('path');
 const mongoose = require(Path.join(__dirname, '../db/', 'mongoose.conf'));
-const ProductsSchema = require(Path.join(__dirname, '../db/schemas/', 'product'));
+const Product = require(Path.join(__dirname, '../db/schemas/', 'product'));
 
 module.exports = class MainApi {
 
@@ -12,7 +12,7 @@ module.exports = class MainApi {
 
         if (!product) { return reject(400, 'Solicitação incorreta, o parâmetro produto é necessário'); }
 
-        ProductsSchema.find(product).lean().exec(
+        Product.find(product).lean().exec(
           (err, resultsArr) => {
             if (err) { return reject(err); }
 
@@ -27,9 +27,7 @@ module.exports = class MainApi {
     return new Promise(
       (resolve, reject) => {
 
-        if (!option) { return reject(404, 'Solicitação incorreta, necessário parametro all para listar produtos'); }
-
-        ProductsSchema.find().lean().exec(
+        Product.find().lean().exec(
           (err, resultsArr) => {
             if (err) { return reject(err); }
 
@@ -40,4 +38,16 @@ module.exports = class MainApi {
     )
   }
 
+  createNewProduct(params) {
+    return new Promise(
+      (resolve, reject) => {
+
+        if(!params) { return reject(404, 'Necessário definir parâmetros para a criação de um produto'); }
+
+        let newProduct = new Product(params);
+
+        getProduct(params.id);
+      }
+    )
+  }
 }

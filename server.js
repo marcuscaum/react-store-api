@@ -3,9 +3,8 @@
 const Restify = require('restify');
 const Path = require('path');
 const server = Restify.createServer();
-const port = process.env.PORT || 3010;
-
 const API = require(Path.join(__dirname, '', 'index')).MainAPI;
+const PORT = process.env.PORT || 3010;
 
 server.use(Restify.acceptParser(server.acceptable));
 server.use(Restify.queryParser());
@@ -33,7 +32,7 @@ server.get('/products/:product',
 
 server.get('/products/all/',
   (req, res) => {
-    API.getAllProducts(req.params.option)
+    API.getAllProducts()
       .then((json) => {
         res.send(200, json);
       })
@@ -43,6 +42,18 @@ server.get('/products/all/',
   }
 );
 
-server.listen(port, function() {
-  console.log("Server started @ 3000");
+server.post('/products/new/:params',
+  (req, res) => {
+    API.createNewProduct(req.params).
+      then((json) => {
+        res.send(200, json);
+      })
+      .catch((err) => {
+        res.send(err);
+      })
+  }
+);
+
+server.listen(PORT, function() {
+  console.log("Server started @ 3010");
 });
