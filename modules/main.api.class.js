@@ -45,8 +45,15 @@ module.exports = class MainApi {
         if(!params) { return reject(404, 'Necessário definir parâmetros para a criação de um produto'); }
 
         let newProduct = new Product(params);
+        newProduct.save().then(
+            (err, resultsArr) => {
+              if (err) { return reject(err); }
 
-        getProduct(params.id);
+              if (doc.name === params.name) {
+                return resolve(resultsArr);
+              }
+            }
+          )
       }
     )
   }

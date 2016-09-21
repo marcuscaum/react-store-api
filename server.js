@@ -30,7 +30,7 @@ server.get('/products/:product',
   }
 );
 
-server.get('/products/all/',
+server.get('/products/all',
   (req, res) => {
     API.getAllProducts()
       .then((json) => {
